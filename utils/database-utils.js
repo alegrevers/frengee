@@ -17,4 +17,4 @@ class MongoConnector {
     }
 }
 
-module.exports = new MongoConnector().database
+module.exports = MongoConnector

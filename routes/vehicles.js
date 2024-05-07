@@ -4,8 +4,9 @@ var router = express.Router()
 
 // conectar com banco via camada de repository e iterar com as models aqui
 /* GET ALL VEHICLES */
-router.get('/', function(req, res) {
-  const carList = Vehicle.findAll()
+router.get('/', async function(req, res) {
+  const carList = await Vehicle.findAll()
+  console.log('🚀 ~ carList:', carList)
   res.send(carList)
 })
 
