@@ -1,37 +1,65 @@
 const Vehicle = require('../repository/vehicle-repository')
 const express = require('express')
+const VehicleValidator = require('../validator/vehicle-validator')
+const VehicleConverter = require('../converter/vehicle-converter')
 var router = express.Router()
 
-// conectar com banco via camada de repository e iterar com as models aqui
-/* GET ALL VEHICLES */
 router.get('/', async function(req, res) {
-  const carList = await Vehicle.findAll()
-  console.log('🚀 ~ carList:', carList)
-  res.send(carList)
+  try {
+    const carList = await Vehicle.findAll()
+
+    res.send(carList.map(car => new VehicleConverter().toDto(car)))
+  } catch (error) {
+    return res.status(500).json({ error: error.message })
+  }
 })
 
-/* GET A VEHICLE BY ID */
-router.get('/:id', function(req, res) {
-  const car = Vehicle.findById(req.params.id)
-  res.json(car)
+router.get('/:id', async function(req, res) {
+  try {
+    await await new VehicleValidator().validateId(req.params.id)
+    const car = await Vehicle.findById(req.params.id)
+
+    res.json(new VehicleConverter().toDto(car))
+  } catch (error) {
+    return res.status(500).json({ error: error.message })
+  }
 })
 
-/* INSERT A NEW VEHICLE */
-router.post('/', function(req, res) {
-  const car = Vehicle.insert(req.body)
-  res.json(car)
+router.post('/', async function(req, res) {
+  try {
+    new VehicleValidator().validateInsert(req.body)
+
+    const insertedCar = await Vehicle.insert(req.body)
+    const car = await Vehicle.findById(insertedCar.insertedId)
+
+    res.json(new VehicleConverter().toDto(car))
+  } catch (error) {
+    return res.status(500).json({ error: error.message })
+  }
 })
 
-/* UPDATE A VEHICLE */
-router.put('/:id', function(req, res) {
-  const car = Vehicle.update(req.params.id, req.body)
-  res.json(car)
+router.put('/:id', async function(req, res) {
+  try {
+    await new VehicleValidator().validateId(req.params.id)
+
+    const car = await Vehicle.update(req.params.id, req.body)
+
+    res.json(new VehicleConverter().toDto(car))
+  } catch (error) {
+    return res.status(500).json({ error: error.message })
+  }
 })
 
-/* DELETE A VEHICLE */
-router.delete('/:id', function(req, res) {
-  const car = Vehicle.delete(req.params.id)
-  res.json(car)
+router.delete('/:id', async function(req, res) {
+  try {
+    await new VehicleValidator().validateId(req.params.id)
+
+    const car = await Vehicle.delete(req.params.id)
+
+    res.json(new VehicleConverter().toDto(car))
+  } catch (error) {
+    return res.status(500).json({ error: error.message })
+  }
 })
 
 module.exports = router

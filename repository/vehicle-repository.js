@@ -1,4 +1,5 @@
 const MongoConnector = require("../utils/database-utils");
+var ObjectId = require('mongodb').ObjectId;
 
 class Vehicle {
     constructor() {
@@ -17,19 +18,19 @@ class Vehicle {
     }
 
     async findById(id) {
-        return this.collection.findOne({ _id: id}).toArray()
+        return this.collection.findOne({ _id: new ObjectId(id)})
     }
 
     async insert(insertData) {
-        return this.collection.insertOne(insertData).toArray()
+        return this.collection.insertOne(insertData)
     }
 
     async update(id, updateData) {
-        return this.collection.updateOne({ _id: id}, updateData).toArray()
+        return this.collection.findOneAndUpdate({ _id: new ObjectId(id)}, { $set: updateData }, { returnNewDocument: true })
     }
 
     async delete(id) {
-        return this.collection.deleteOne({ _id: id}).toArray()
+        return this.collection.findOneAndDelete({ _id: new ObjectId(id)})
     }
 }
 
