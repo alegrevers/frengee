@@ -1,45 +1,18 @@
-const express = require('express');
-const VehicleHandler = require('../handlers/vehicle-handler')
-const vehicleHandler = new VehicleHandler()
-const supertest = require('supertest')
-const router = require('../routes/vehicles');
-const Vehicle = require('../repository/vehicle-repository');
+require('dotenv').config()
 const { close, connect } = require('../utils/database-utils');
-var app = express();
-app.use('/', router);
-const request = supertest(app)
+connect()
+const request = require('supertest')
+const app = require('../app');
+const server = require('../server');
 
 describe('Routes Test', () => {
 
-    beforeAll(() => {
-        connect();
-    });
-
-      afterAll(() => {
-        close();
-        // server.close();
-      });
-
-    beforeEach(() => {
-        app.post('/', async () => {
-            const insertBody = {
-                model: 'fiesta',
-                make: 'ford',
-                year: '2013',
-                color: 'white'
-            }
-
-            const insertedCar = await Vehicle.insert(insertBody)
-            console.log('🚀 ~ insertedCar:', insertedCar)
-        })
-    });
-
-    // afterEach(() => {
-    //     process.env = originalEnv;
-    // });
+    afterAll(() => {
+        server.close()
+    })
 
     test('Get All Vehicles', async () =>{
-        const res = await request.get('/')
+        const res = await request(app).get('/api/vehicles')
         console.log('🚀 ~ res:', res)
     })
 })
