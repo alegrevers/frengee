@@ -1,21 +1,27 @@
+const ColorMissingError = require('../errors/color-missing-error')
+const IdNotFoundError = require('../errors/id-not-found-error')
+const InvalidIdError = require('../errors/invalid-id-error')
+const MakerMissingError = require('../errors/maker-missing-error')
+const ModelMissingError = require('../errors/model-missing-error')
+const YearMissingError = require('../errors/year-missing-error')
 const Vehicle = require('../repository/vehicle-repository')
 const { ObjectId } = require("mongodb")
 
 class VehicleValidator {
     validateInsert (insertData) {
-        const { make, year, color, model } = insertData
+        const { maker, year, color, model } = insertData
 
-        if (!year) throw new Error('O campo ano é obrigatório')
-        if (!color) throw new Error('O campo cor é obrigatório')
-        if (!make) throw new Error('O campo marca é obrigatório')
-        if (!model) throw new Error('O campo modelo é obrigatório')
+        if (!year) throw new YearMissingError()
+        if (!color) throw new ColorMissingError()
+        if (!maker) throw new MakerMissingError()
+        if (!model) throw new ModelMissingError()
     }
 
     async validateId (id) {
-        if (!ObjectId.isValid(id)) throw new Error('ID inválido')
+        if (id && !ObjectId.isValid(id)) throw new InvalidIdError()
 
         const car = await Vehicle.findById(id)
-        if (!car) throw new Error('ID não encontrado')
+        if (!car) throw new IdNotFoundError()
     }
 
 }

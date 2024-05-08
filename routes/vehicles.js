@@ -2,6 +2,8 @@ const Vehicle = require('../repository/vehicle-repository')
 const express = require('express')
 const VehicleValidator = require('../validator/vehicle-validator')
 const VehicleConverter = require('../converter/vehicle-converter')
+const InvalidIdError = require('../errors/invalid-id-error')
+const IdNotFoundError = require('../errors/id-not-found-error')
 var router = express.Router()
 
 router.get('/', async function(req, res) {
@@ -14,18 +16,18 @@ router.get('/', async function(req, res) {
   }
 })
 
-router.get('/:id', async function(req, res) {
+router.get('/:id', async function(req, res, next) {
   try {
     await await new VehicleValidator().validateId(req.params.id)
     const car = await Vehicle.findById(req.params.id)
 
     res.json(new VehicleConverter().toDto(car))
   } catch (error) {
-    return res.status(500).json({ error: error.message })
+    next(error)
   }
 })
 
-router.post('/', async function(req, res) {
+router.post('/', async function(req, res,next) {
   try {
     new VehicleValidator().validateInsert(req.body)
 
@@ -34,11 +36,11 @@ router.post('/', async function(req, res) {
 
     res.json(new VehicleConverter().toDto(car))
   } catch (error) {
-    return res.status(500).json({ error: error.message })
+    next(error)
   }
 })
 
-router.put('/:id', async function(req, res) {
+router.put('/:id', async function(req, res, next) {
   try {
     await new VehicleValidator().validateId(req.params.id)
 
@@ -46,11 +48,11 @@ router.put('/:id', async function(req, res) {
 
     res.json(new VehicleConverter().toDto(car))
   } catch (error) {
-    return res.status(500).json({ error: error.message })
+    next(error)
   }
 })
 
-router.delete('/:id', async function(req, res) {
+router.delete('/:id', async function(req, res, next) {
   try {
     await new VehicleValidator().validateId(req.params.id)
 
@@ -58,7 +60,7 @@ router.delete('/:id', async function(req, res) {
 
     res.json(new VehicleConverter().toDto(car))
   } catch (error) {
-    return res.status(500).json({ error: error.message })
+    next(error)
   }
 })
 

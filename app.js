@@ -10,6 +10,16 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use('/api/vehicles', vehicles);
 
+app.use((err, req, res, next) => {
+  if (err instanceof Error) {
+    console.error(`${err.name}: ${err.message}`);
+    res.status(err.statusCode).json({ error: err.message });
+  } else {
+    console.error(err);
+    res.status(500).send('An error occurred!');
+  }
+});
+
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
 })
