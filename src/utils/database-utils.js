@@ -5,7 +5,7 @@ let database
 let dbPromise;
 
     async function connect() {
-        if (process.env.NODE_ENV === 'test') {
+        if (!connectionString || process.env.NODE_ENV === 'test') {
             const mongod = await MongoMemoryServer.create()
             connectionString = mongod.getUri()
         }

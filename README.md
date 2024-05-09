@@ -9,6 +9,7 @@ Para instalar os pacotes e as dependências necessárias
 yarn
 ```
 
+
 Antes de iniciar o servidor é necesário atribuir os valores desejados para as variaveis de ambiente em um arquivo `.env`. Para isso, basta copiar e colar o arquivo `.env.sample`, removendo o `.sample` e atribuindo os valores para cada variável.
 
 Para iniciar o servidor localmente
@@ -16,10 +17,14 @@ Para iniciar o servidor localmente
 yarn start
 ```
 
+
 Para rodar os testes de integração basta rodar o comando:
 ```
 yarn test
 ```
+
+
+Para garantir um funcionamento adequado, se você não possuir uma conexão local com banco (via cluster ou container), será criada uma instância em memória que permitirá o funcionamento de todos os métodos da API.
 
 Por fim, é possível conferir a documentação da API abaixo no READ.ME e também disponibilizado no endereço `localhost:3000/doc` (quando o servidor estiver rodando).
 
