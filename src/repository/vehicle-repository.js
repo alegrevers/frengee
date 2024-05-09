@@ -3,14 +3,8 @@ var ObjectId = require('mongodb').ObjectId;
 
 class Vehicle {
     constructor() {
-        // this.collection
         this.connect()
     }
-
-    // async connect () {
-    //     const database = await getDatabase()
-    //     this.collection = database.collection(process.env.DATABASE_COLLECTION)
-    // }
 
     async connect() {
         if (!this.collection) {
