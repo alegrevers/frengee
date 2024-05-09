@@ -22,7 +22,6 @@ const stop = require('../server');
 describe('Handler Test', () => {
     beforeAll(async () => {
         const testVehicle = await request(app).post('/api/vehicles').send(testData)
-        console.log('🚀 ~ testVehicle:', testVehicle)
 
         vehicleId = testVehicle.body.id
     })
@@ -35,7 +34,6 @@ describe('Handler Test', () => {
     test('Get All Vehicles', async () =>{
         const res = await request(app).get('/api/vehicles')
             .expect(200)
-        console.log('🚀 ~ res:', res)
         expect(res.body.length >= 1).toBe(true)
     })
 
