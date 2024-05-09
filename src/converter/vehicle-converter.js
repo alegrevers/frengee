@@ -1,7 +1,7 @@
 class VehicleConverter {
     toDto (databaseData) {
         const { _id,
-            make,
+            maker,
             year,
             color,
             doors,
@@ -15,7 +15,7 @@ class VehicleConverter {
 
         return {
             id: _id,
-            make: make,
+            maker: maker,
             year: year,
             color: color,
             doors: doors,

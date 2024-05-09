@@ -9,11 +9,16 @@ database.connect().then(() => {
 
 const app = require('./app')
 const port = process.env.PORT
+let server
 
 function start () {
-  return app.listen(port, () => {
+  server = app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)
   })
 }
 
-module.exports = start()
+async function stop () {
+  await server.close()
+}
+
+module.exports = stop

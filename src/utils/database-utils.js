@@ -5,26 +5,20 @@ let database
 let dbPromise;
 
     async function connect() {
-        // try {
-            if (process.env.NODE_ENV === 'test') {
-                const mongod = await MongoMemoryServer.create()
-                connectionString = mongod.getUri()
-            }
+        if (process.env.NODE_ENV === 'test') {
+            const mongod = await MongoMemoryServer.create()
+            connectionString = mongod.getUri()
+        }
 
-            const client = new MongoClient(connectionString)
-            client.connect()
+        const client = new MongoClient(connectionString)
+        client.connect()
 
-            // database = client.db('admin')
-            database = client.db(process.env.DATABASE_NAME)
-            // console.log('🚀 ~ database:', database)
-        // } catch (error) {
-        //     next(error)
-        // }
+        database = client.db(process.env.DATABASE_NAME)
     }
 
     function close () {
         const client = new MongoClient(connectionString)
-        client.close()
+        return client.close()
     }
 
     async function getDatabase() {
@@ -35,11 +29,6 @@ let dbPromise;
         await dbPromise;
         return database;
     }
-
-    // async function getDatabase () {
-    //     console.log('🚀 ~ database:', database)
-    //     return database
-    // }
 
 module.exports = {
     connect,

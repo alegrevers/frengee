@@ -8,7 +8,6 @@ class VehicleHandler {
     async findAll(req, res) {
         try {
             const carList = await Vehicle.findAll()
-            console.log('🚀 ~ carList:', carList)
 
             res.send(carList.map(car => converter.toDto(car)))
         } catch (error) {

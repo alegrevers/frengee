@@ -9,6 +9,9 @@ module.exports = {
   preset: '@shelf/jest-mongodb',
   testEnvironment: 'jest-environment-node',
   watchPathIgnorePatterns: ['globalConfig'],
+  setupFilesAfterEnv: [
+    "./src/test/handlers.test.js"
+  ],
   detectOpenHandles: true,
-  testTimeout: 99999999,
+  testTimeout: 5000,
 }
