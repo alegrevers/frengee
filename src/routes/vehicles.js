@@ -3,14 +3,48 @@ const VehicleHandler = require('../handlers/vehicle-handler')
 const vehicleHandler = new VehicleHandler()
 var router = express.Router()
 
-router.get('/', vehicleHandler.findAll)
+router.get('/',
+    /* #swagger.tags = ['Vehicles']
+       #swagger.description = 'Endpoint para encontrar todos os veículos.' */
+    vehicleHandler.findAll
+)
 
-router.get('/:id', vehicleHandler.findById)
+router.get('/:id',
+    /* #swagger.tags = ['Vehicles']
+       #swagger.description = 'Endpoint para encontrar um veículo pelo id.' */
+    vehicleHandler.findById
+)
 
-router.post('/', vehicleHandler.insert)
+router.post('/',
+    // #swagger.tags = ['Vehicles']
+    // #swagger.description = 'Endpoint para inserir um veículo.'
 
-router.put('/:id', vehicleHandler.update)
+    /* #swagger.parameters['insertData'] = {
+            in: 'body',
+            description: 'Informações do veículo.',
+            required: true,
+            schema: { $ref: "#/definitions/AddVehicles" }
+    } */
+    vehicleHandler.insert
+)
 
-router.delete('/:id', vehicleHandler.deleteVehicle)
+router.put('/:id',
+    // #swagger.tags = ['Vehicles']
+    // #swagger.description = 'Endpoint para atualizar um veículo.'
+
+    /* #swagger.parameters['updateData'] = {
+            in: 'body',
+            description: 'Informações do veículo.',
+            schema: { $ref: "#/definitions/EditVehicles" }
+    } */
+    vehicleHandler.update
+)
+
+router.delete('/:id',
+    // #swagger.tags = ['Vehicles']
+    // #swagger.description = 'Endpoint para atualizar um veículo.'
+
+    vehicleHandler.deleteVehicle
+)
 
 module.exports = router

@@ -17,8 +17,9 @@ class VehicleHandler {
 
     async findById (req, res, next) {
         try {
-            await await validator.validateId(req.params.id)
-            const car = await Vehicle.findById(req.params.id)
+            const filter = req.params.id
+            await validator.validateId(filter)
+            const car = await Vehicle.findById(filter)
 
             res.json(converter.toDto(car))
         } catch (error) {
@@ -29,9 +30,10 @@ class VehicleHandler {
 
     async insert (req, res,next) {
         try {
-            validator.validateInsert(req.body)
+            const insertData = req.body
+            validator.validateInsert(insertData)
 
-            const insertedCar = await Vehicle.insert(req.body)
+            const insertedCar = await Vehicle.insert(insertData)
             const car = await Vehicle.findById(insertedCar.insertedId)
 
             res.json(converter.toDto(car))

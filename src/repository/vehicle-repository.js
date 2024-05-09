@@ -36,7 +36,7 @@ class Vehicle {
 
     async update(id, updateData) {
         await this.connect();
-        return this.collection.findOneAndUpdate({ _id: new ObjectId(id)}, { $set: updateData }, { new: true })
+        return this.collection.findOneAndUpdate({ _id: new ObjectId(id)}, { $set: updateData }, { returnNewDocument: true })
     }
 
     async delete(id) {
