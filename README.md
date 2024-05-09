@@ -4,18 +4,12 @@
 
 ### Listar Veículos
 
-Endpoint:
-GET /api/vehicles/
-
-Descrição:
+`GET /api/vehicles/`
 Retorna uma lista de todos os veículos cadastrados no sistema.
 
 ### Inserir Veículo
 
-Endpoint:
-POST /api/vehicles/
-
-Descrição:
+`POST /api/vehicles/`
 Insere um novo veículo no sistema.
 
 Parâmetros da Solicitação:
@@ -31,10 +25,7 @@ Parâmetros da Solicitação:
 
 ### Obter Veículo por ID
 
-Endpoint:
-GET /api/vehicles/{id}
-
-Descrição:
+`GET /api/vehicles/{id}`
 Retorna os detalhes de um veículo específico com base no ID fornecido.
 
 Parâmetros da URL:
@@ -42,10 +33,7 @@ Parâmetros da URL:
 
 ### Atualizar Veículo
 
-Endpoint:
-PUT /api/vehicles/{id}
-
-Descrição:
+`PUT /api/vehicles/{id}`
 Atualiza os detalhes de um veículo específico com base no ID fornecido.
 
 Parâmetros da URL:
@@ -64,10 +52,7 @@ Parâmetros da Solicitação:
 
 ### Excluir Veículo
 
-Endpoint:
-DELETE /api/vehicles/{id}
-
-Descrição:
+`DELETE /api/vehicles/{id}`
 Exclui um veículo específico com base no ID fornecido.
 
 Parâmetros da URL:
