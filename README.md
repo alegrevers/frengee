@@ -5,9 +5,7 @@
 ### Listar Veículos
 
 Endpoint:
-GET /api/vehicles/
-
-Descrição:
+`GET /api/vehicles/`
 Retorna uma lista de todos os veículos cadastrados no sistema.
 
 ### Inserir Veículo
