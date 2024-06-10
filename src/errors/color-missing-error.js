@@ -1,6 +1,6 @@
 class ColorMissingError extends Error {
     constructor() {
-      super('O campo color é obrigatório.');
+      super('O campo color é obrigatório');
       this.name = 'ValidationError';
       this.statusCode = 400;
     }
